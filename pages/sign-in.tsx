@@ -28,7 +28,7 @@ const SignIn = ({
               {Object.values(providers!).map((provider) => (
                 <div key={provider.name}>
                   <Button
-                    className="!h-12 !px-5 !text-lg"
+                    className="!h-12 !px-5 !text-lg mt-7"
                     onClick={() => signIn(provider.id)}
                   >
                     Sign in with{' '}
