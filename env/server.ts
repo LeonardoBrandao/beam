@@ -53,6 +53,8 @@ export const serverEnv = {
   ...browserEnv,
   ...envsafe({
     DATABASE_URL: str({
+      allowEmpty: true,
+      devDefault: '',
       default: '',
     }),
     NEXT_APP_URL: slackParser({
