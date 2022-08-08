@@ -52,16 +52,20 @@ const slackParser = makeValidator<string>((input) => {
 export const serverEnv = {
   ...browserEnv,
   ...envsafe({
-    DATABASE_URL: str(),
+    DATABASE_URL: str({
+      default: '',
+    }),
     NEXT_APP_URL: slackParser({
       allowEmpty: true,
       devDefault: 'http://localhost:3000',
     }),
     NEXTAUTH_SECRET: str({
       devDefault: 'xxx',
+      default: 'xxxyyyzzz',
     }),
     AUTH_PROVIDER: str({
       choices: ['github', 'okta', 'keycloak'],
+      default: 'keycloak',
     }),
     GITHUB_ID: githubParser({ allowEmpty: true, default: '' }),
     GITHUB_SECRET: githubParser({ allowEmpty: true, default: '' }),
