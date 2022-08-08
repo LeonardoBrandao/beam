@@ -16,7 +16,7 @@ export function Footer() {
             rel="noreferrer"
             className="transition-colors text-secondary hover:text-primary"
           >
-            PlanetScale
+            PlanetScale & le0zera
           </a>
         </span>
       </div>

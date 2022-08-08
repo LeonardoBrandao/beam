@@ -6,7 +6,7 @@ import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next'
-import { getServerSession } from 'next-auth/next'
+import { unstable_getServerSession } from 'next-auth/next'
 import { getProviders, signIn } from 'next-auth/react'
 import Head from 'next/head'
 import Div100vh from 'react-div-100vh'
@@ -31,7 +31,8 @@ const SignIn = ({
                     className="!h-12 !px-5 !text-lg"
                     onClick={() => signIn(provider.id)}
                   >
-                    Sign in with {provider.name}
+                    Sign in with{' '}
+                    {provider.name === 'Keycloak' ? 'Google' : provider.name}
                   </Button>
                 </div>
               ))}
@@ -49,7 +50,11 @@ const SignIn = ({
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const session = await getServerSession(context, authOptions)
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  )
   const providers = await getProviders()
 
   if (session?.user) {

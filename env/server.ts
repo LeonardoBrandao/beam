@@ -21,6 +21,13 @@ const githubParser = makeValidator<string>((input) => {
   return input
 })
 
+const keycloakParser = makeValidator<string>((input) => {
+  if (process.env.AUTH_PROVIDER === 'keycloak' && input === '') {
+    throw invalidEnvError('keycloak config', input)
+  }
+  return input
+})
+
 const oktaParser = makeValidator<string>((input) => {
   if (process.env.AUTH_PROVIDER === 'okta' && input === '') {
     throw invalidEnvError('okta config', input)
@@ -54,7 +61,7 @@ export const serverEnv = {
       devDefault: 'xxx',
     }),
     AUTH_PROVIDER: str({
-      choices: ['github', 'okta'],
+      choices: ['github', 'okta', 'keycloak'],
     }),
     GITHUB_ID: githubParser({ allowEmpty: true, default: '' }),
     GITHUB_SECRET: githubParser({ allowEmpty: true, default: '' }),
@@ -62,6 +69,9 @@ export const serverEnv = {
     OKTA_CLIENT_ID: oktaParser({ allowEmpty: true, default: '' }),
     OKTA_CLIENT_SECRET: oktaParser({ allowEmpty: true, default: '' }),
     OKTA_ISSUER: oktaParser({ allowEmpty: true, default: '' }),
+    KEYCLOAK_CLIENT_ID: keycloakParser({ allowEmpty: true, default: '' }),
+    KEYCLOAK_CLIENT_SECRET: keycloakParser({ allowEmpty: true, default: '' }),
+    KEYCLOAK_ISSUER: keycloakParser({ allowEmpty: true, default: '' }),
     CLOUDINARY_CLOUD_NAME: cloudinaryParser({ allowEmpty: true, default: '' }),
     CLOUDINARY_API_KEY: cloudinaryParser({ allowEmpty: true, default: '' }),
     CLOUDINARY_API_SECRET: cloudinaryParser({ allowEmpty: true, default: '' }),

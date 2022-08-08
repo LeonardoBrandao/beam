@@ -6,4 +6,15 @@ declare global {
 
 export const prisma = global.prisma || new PrismaClient()
 
+prisma.$use(async (params, next) => {
+  if (params.action == 'create' && params.model == 'Account') {
+    delete params.args.data['not-before-policy']
+    delete params.args.data['refresh_expires_in']
+  }
+
+  const result = await next(params)
+  // See results here
+  return result
+})
+
 if (process.env.NODE_ENV !== 'production') global.prisma = prisma
