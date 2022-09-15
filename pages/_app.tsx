@@ -5,6 +5,7 @@ import { httpBatchLink } from '@trpc/client/links/httpBatchLink'
 import { loggerLink } from '@trpc/client/links/loggerLink'
 import { withTRPC } from '@trpc/next'
 import { TRPCError } from '@trpc/server'
+import { Session } from 'next-auth'
 import { SessionProvider, signIn, useSession } from 'next-auth/react'
 import { ThemeProvider } from 'next-themes'
 import type { AppProps } from 'next/app'
@@ -14,6 +15,7 @@ import '../styles/globals.css'
 
 type AppPropsWithAuthAndLayout = AppProps & {
   Component: NextPageWithAuthAndLayout
+  pageProps: { session: Session } & Record<string | number | symbol, any>
 }
 
 function MyApp({
